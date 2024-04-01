@@ -1,0 +1,14 @@
+<view class="pages">
+    <view wx:if="{{swiperList.length}}" class="swiper-container">
+        <swiper bindchange="onSwiperChange">
+            <swiper-item wx:for="{{swiperList}}" wx:key="index">
+                <image bindtap="onSwiperTab" data-item="{{item}}" mode="aspectFill" src="{{item.imageUri}}"></image>
+            </swiper-item>
+        </swiper>
+
+        <view class="dots">
+            <view class="dot {{current !== index || 'active'}}" wx:for="{{swiperList}}" wx:key="index"></view>
+        </view>
+
+    </view>
+</view>
