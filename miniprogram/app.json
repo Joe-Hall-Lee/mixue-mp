@@ -1,42 +1,57 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/store/index",
         "pages/menu/index",
         "pages/order/index",
         "pages/me/index",
         "pages/web-view/index",
-        "pages/product/detail"
+        "pages/product/detail",
+        "pages/login/index"
     ],
+    "permission": {
+        "scope.userLocation": {
+            "desc": "你的位置信息将用于小程序位置接口的效果展示"
+        }
+    },
     "window": {
-        "backgroundColor": "#F6F6F6",
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#F6F6F6",
-        "navigationBarTitleText": "云开发 QuickStart",
+        "backgroundColor": "#fefefe",
+        "backgroundTextStyle": "dark",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "京韵天桥",
         "navigationBarTextStyle": "black"
     },
     "sitemapLocation": "sitemap.json",
     "style": "v2",
     "lazyCodeLoading": "requiredComponents",
     "tabBar": {
-        "color": "#A2A9B0",
-        "selectedColor": "#07C160",
+        "color": "#797979",
+        "selectedColor": "#E60012",
         "backgroundColor": "#ffffff",
         "list": [
             {
                 "pagePath": "pages/index/index",
-                "text": "首页"
+                "text": "京韵天桥",
+                "iconPath": "./assets/images/home.png",
+                "selectedIconPath": "./assets/images/home-selected.png"
             },
             {
-                "pagePath": "pages/menu/index",
-                "text": "点餐"
+                "pagePath": "pages/store/index",
+                "text": "导航导览",
+                "iconPath": "./assets/images/menu.png",
+                "selectedIconPath": "./assets/images/menu-selected.png"
             },
             {
                 "pagePath": "pages/order/index",
-                "text": "订单"
+                "text": "手绘地图",
+                "iconPath": "./assets/images/order.png",
+                "selectedIconPath": "./assets/images/order-selected.png"
             },
             {
                 "pagePath": "pages/me/index",
-                "text": "我的"
+                "text": "我的",
+                "iconPath": "./assets/images/me.png",
+                "selectedIconPath": "./assets/images/me-selected.png"
             }
         ]
     }

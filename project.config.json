@@ -1,6 +1,6 @@
 {
     "miniprogramRoot": "miniprogram/",
-    "cloudfunctionRoot": "cloudfunctions/",
+    "cloudfunctionRoot": "cloud-functions/",
     "setting": {
         "urlCheck": true,
         "es6": true,
@@ -75,5 +75,10 @@
     "editorSetting": {
         "tabIndent": "auto",
         "tabSize": 4
+    },
+    "permissions": {
+        "openapi": [
+            "subscribeMessage.send"
+        ]
     }
 }

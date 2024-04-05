@@ -7,6 +7,20 @@
         "miniprogram": {
             "list": [
                 {
+                    "name": "登录页面",
+                    "pathName": "pages/login/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "门店列表",
+                    "pathName": "pages/index/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
                     "name": "首页-快速开始",
                     "pathName": "pages/index/index",
                     "query": ""

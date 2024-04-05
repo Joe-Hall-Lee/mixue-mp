@@ -1,4 +1,6 @@
 <view class="pages">
+
+    <!-- 轮播图区域 -->
     <view wx:if="{{swiperList.length}}" class="swiper-container">
         <swiper bindchange="onSwiperChange">
             <swiper-item wx:for="{{swiperList}}" wx:key="index">
@@ -9,6 +11,27 @@
         <view class="dots">
             <view class="dot {{current !== index || 'active'}}" wx:for="{{swiperList}}" wx:key="index"></view>
         </view>
+
+    </view>
+
+    <!-- 会员/积分区域 -->
+    <view class="member-area">
+        <view class="vip-box">
+            <image src="../../assets/images/vip-pic.png"></image>
+            <view class="meta">
+                <view class="title">{{ memberInfo ? '京韵天桥': '尊敬的用户'}}</view>
+                <progress-bar value="{{33}}" width="320rpx" />
+                <view class="tips">{{memberInfo ?'一轴-一核-三区-三路径-六大文化':'会员可享【限时优惠】等多项权益'}}</view>
+
+            </view>
+        </view>
+        <view wx:if="{{memberInfo}}" class="coin-box">
+            <image mode="aspectFill" src="../../assets/images/coin.png"></image>
+            <view class="currency">51</view>
+        </view>
+
+        <view wx:if="{{!memberInfo}}" class="login-btn" bindtap="gotoLogin">授权登录</view>
+
 
     </view>
 </view>

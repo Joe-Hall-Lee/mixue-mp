@@ -1,8 +1,8 @@
-.swiper-container {
-	width: 100vx;
-	height: 630rpx;
-	position: relative;
+@import '../../style/theme.scss';
 
+.swiper-container {
+	width: 100vw;
+	height: 630rpx;
 
 	swiper {
 		height: 100%;
@@ -19,7 +19,7 @@
 	.dots {
 		position: absolute;
 		left: 50rpx;
-		bottom: 50rpx;
+		bottom: 58rpx;
 		display: inline-flex;
 	}
 
@@ -31,9 +31,91 @@
 		border-radius: 4rpx;
 		margin-left: 4rpx;
 		transition: all 0.5s;
+
 		&.active {
 			width: 29rpx;
 			opacity: 1;
+		}
+	}
+}
+
+.member-area {
+	position: relative;
+	z-index: 2;
+	margin-top: -40rpx;
+	margin-left: auto;
+	margin-right: auto;
+	width: 688rpx;
+	height: 174rpx;
+	border-radius: 16rpx;
+	background-color: #fff;
+	overflow: hidden;
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 20rpx;
+	box-sizing: border-box;
+
+	.vip-box {
+		display: flex;
+
+
+		image {
+			width: 100rpx;
+			height: 100rpx;
+			border-radius: 50rpx;
+			overflow: hidden;
+			margin-right: 26rpx;
+			flex-shrink: 0;
+		}
+
+		.meta {
+			.title {
+				font-size: 32rpx;
+				font-weight: bold;
+				margin-bottom: 18rpx;
+			}
+
+			.tips {
+				margin-top: 14rpx;
+				color: $gray-text-color;
+				font-size: 24rpx;
+			}
+
+		}
+	}
+
+	.coin-box {
+		display: flex;
+		flex-direction: column;
+
+		image {
+			width: 130rpx;
+			height: 70rpx;
+		}
+	}
+
+	.currency {
+		margin-left: 27rpx;
+		margin-top: 10rpx;
+		color: #d32d25;
+	}
+
+	.login-btn {
+		width: 150rpx;
+		height: 65rpx;
+		border-radius: 12rpx;
+		background-color: $primary-color;
+		color: #fff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 25rpx;
+
+		&:active {
+			opacity: 0.6;
 		}
 	}
 }
