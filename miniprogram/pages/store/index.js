@@ -1,10 +1,10 @@
 import storeApi from "../../api/store"
 const computedBehavior = require('miniprogram-computed').behavior
+const key = 'DVYBZ-DHJCB-I4CUK-JOTM3-X4Y6H-2PFRK'
+
 // pages/store/index.js
 Page({
     behaviors: [computedBehavior],
-
-
     /**
      * 页面的初始数据
      */
@@ -17,25 +17,31 @@ Page({
             'OPENING': '营业中',
             'CLOSED': '已关闭'
         },
-        computed: {
-            markers(data) {
-                return data.storeList.map((item, index) => {
-                    return {
-                        id: index + 1,
-                        key: item._id,
-                        title: item.name,
-                        latitude: item.location.latitude,
-                        longitude: item.location.longitude,
-                        iconPath: '../../assets/images/marker.png',
-                        width: '55rpx',
-                        height: '69rpx'
-                    }
-                })
-            }
-        },
         mapContext: null,
-        mapSdk: null
+        mapSdk: key,
+        storeDetailShow: false,
+        currentStore: null,
+        collapse: false,
+
     },
+    computed: {
+        markers(data) {
+            return data.storeList.map((item, index) => {
+                return {
+                    id: index + 1,
+                    key: item._id,
+                    title: item.name,
+                    latitude: item.location.latitude,
+                    longitude: item.location.longitude,
+                    iconPath: '../../assets/images/marker.png',
+                    width: '55rpx',
+                    height: '69rpx'
+                }
+            })
+        }
+    },
+
+
 
     /**
      * 生命周期函数--监听页面加载
@@ -47,7 +53,7 @@ Page({
         this.initMapContext()
     },
     initMapSdk() {
-        this.mapSdk = 'DVYBZ-DHJCB-I4CUK-JOTM3-X4Y6H-2PFRK'; // 腾讯地图 API Key
+        this.mapSdk = key; // 腾讯地图 API Key
     },
     fetchStoreList() {
         storeApi.list(this.data.longitude, this.data.latitude).then(res => {
@@ -75,6 +81,11 @@ Page({
         })
     },
     makeStoreList(storeList) {
+        if (storeList.length === 0) {
+            this.setData({
+                storeList: []
+            })
+        }
         const locationList = storeList.map(item => {
             const location = item.location;
             return `${location.latitude},${location.longitude}`;
@@ -103,13 +114,30 @@ Page({
 
             }
         });
-
     },
 
     initMapContext() {
         wx.createSelectorQuery().select('#store-map').context((res) => {
             this.mapContext = res.context
         }).exec()
+    },
+    
+
+
+    popupStoreDetail(e) {
+        const {
+            store
+        } = e.currentTarget.dataset
+        this.setData({
+            storeDetailShow: true,
+            currentStore: store
+        })
+
+    },
+    collapse() {
+        this.setData({
+            collapse: !this.data.collapse
+        })
     },
 
     async loadCurrentLocation() {
@@ -132,6 +160,8 @@ Page({
 
     goToCurrentLocation() {
         this.mapContext.moveToLocation()
+
+        this.loadCurrentLocation();
     },
 
     /**

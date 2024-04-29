@@ -4,15 +4,18 @@
 		<input class="search" placeholder="搜索" type="text"></input>
 	</view>
 
-	<map id="store-map" class="store-map" latitude="{{latitude}}" longitude="{{longitude}}" show-location markers="{{markers}}">
+	<map id="store-map" class="store-map" style="height:{{collapse ? '0': '520rpx'}};" latitude="{{latitude}}" longitude="{{longitude}}" show-location markers="{{markers}}" bindmarkertap="onMarkerTab" >
 		<image class="current-icon" src="../../assets/images/current.png" bindtap="goToCurrentLocation" />
 	</map>
-	<view class="collapse-area">
-		收起地图
+	<view class="collapse-area" bindtap="collapse">
+		{{collapse ? '展开地图': '收起地图'}}
+
+		<image class="icon" src="{{'../../assets/icons/arrow-' + (collapse ? 'down': 'up') + '.svg'}}"></image>
+
 	</view>
 
-	<scroll-view class="store-list" scroll-y>
-		<view wx:for="{{storeList}}" wx:key="index" class="store-box">
+	<scroll-view class="store-list" style="height: calc(100vh - {{collapse ? 180: 700}}rpx);" scroll-y>
+		<view wx:for="{{storeList}}" wx:key="index" class="store-box" bindtap="popupStoreDetail" data-store="{{item}}">
 			<view class="info-area">
 				<view class="name">{{item.name}}</view>
 				<view class="info">{{item.address}}</view>
@@ -29,6 +32,31 @@
 			</view>
 
 		</view>
-
+		<view wx:if="{{!storeList.length}}" class="empty">抱歉附近暂时没有店</view>
 	</scroll-view>
+
+	<page-container wx:if="{{currentStore}}" show="{{storeDetailShow}}" round position="bottom" class="store-detail">
+
+		<view class="notification">
+			<image class="icon" src="../../assets/icons/speaker.svg" />
+			<view class="info">我们的门店很多，千万不要选错哦~</view>
+		</view>
+		<view class="container">
+			<view class="header-area">
+				<view class="info">
+					<view class="title">{{currentStore.name}}</view>
+					<view class="address">{{currentStore.address}}</view>
+				</view>
+				<view class="distance">
+					距离<view style="color: red;">{{currentStore.distance}}km</view>
+				</view>
+			</view>
+			<map id="store-detail-map" class="store-detail-map" latitude="{{currentStore.location.latitude}}" longitude="{{currentStore.location.longitude}}" show-location markers="{{markers}}">
+
+			</map>
+
+			<button class="menu-btn">进入菜单</button>
+		</view>
+
+	</page-container>
 </view>

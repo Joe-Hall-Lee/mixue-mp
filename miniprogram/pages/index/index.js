@@ -1,8 +1,7 @@
 // pages/index/index.js
-
 import swiper from "../../api/swiper"
-const app = getApp();
 
+const app = getApp();
 Page({
 
     /**
@@ -11,7 +10,8 @@ Page({
     data: {
         swiperList: [],
         current: 0,
-        memberInfo: false
+        memberInfo: false,
+        user: null
     },
 
     onSwiperChange(e) {
@@ -26,26 +26,34 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad(options) {
+    onLoad() {
         swiper.list().then(res => {
             this.setData({
                 swiperList: res.data
             })
         })
-        this.loadMemberInfo();
+    },
+
+    onMenuCardClick() {
+        wx.navigateTo({
+            url: '/pages/menu/index',
+        })
+    },
+    onArticleClick() {
+        wx.navigateTo({
+            url: '/pages/web-view/index?url=https://baidu.com'
+        })
     },
 
     onShow() {
-        this.loadMemberInfo();
-    },
-
-    loadMemberInfo() {
-        if (wx.getStorageSync('phoneNumber')) {
+        if (!this.data.user) {
+            const user = wx.getStorageSync('user')
             this.setData({
-                memberInfo: true
+                user
             })
         }
     },
+
     gotoLogin() {
         wx.navigateTo({
             url: '/pages/login/index',

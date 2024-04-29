@@ -1,16 +1,18 @@
 // pages/login/index.js
-Page({
+import userApi from "../../api/user"
 
-    /**
-     * 页面的初始数据
-     */
+Page({
     data: {},
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
-
+    onLoad: function () {
+        if (getApp().isLogin()) {
+            wx.navigateBack({
+                delta: 0,
+            })
+        }
 
     },
     login(e) {
@@ -22,10 +24,19 @@ Page({
             }
 
         }).then(res => {
-            wx.setStorageSync('phoneNumber', res.result)
-            wx.navigateBack({
-                delta: 0
+            const phoneNumber = res.result
+
+            userApi.create({
+                phoneNumber
+            }).then(response => {
+                userApi.me().then(results => {
+                    wx.setStorageSync('user', results.data[0])
+                    wx.navigateBack({
+                        delta: 0
+                    })
+                })
             })
+
         })
     }
 })

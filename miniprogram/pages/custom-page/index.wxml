@@ -1,0 +1,3 @@
+<view class="view-page" class="custom-page">
+	<rich-text nodes="{{page.content}}"></rich-text>
+</view>
