@@ -1,7 +1,9 @@
 // pages/login/index.js
 import userApi from "../../api/user"
+import userBehavior from '../../behaviors/user-behavior'
 
 Page({
+    behaviors: [userBehavior],
     data: {},
 
     /**
@@ -31,6 +33,7 @@ Page({
             }).then(response => {
                 userApi.me().then(results => {
                     wx.setStorageSync('user', results.data[0])
+                    this.updatePhoneNumber()
                     wx.navigateBack({
                         delta: 0
                     })

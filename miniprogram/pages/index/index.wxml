@@ -19,25 +19,25 @@
         <view class="vip-box">
             <image src="../../assets/images/vip-pic.png"></image>
             <view class="meta">
-                <view class="title">{{ user ? '京韵天桥': '尊敬的用户'}}</view>
-                <progress-bar wx:if="{{user}}" value="{{33}}" width="320rpx" />
-                <view class="tips">{{user ?'一轴-一核-三区-三路径-六大文化':'会员可享【限时优惠】等多项权益'}}</view>
+                <view class="title">{{ user.isLogin ? '京韵天桥': '尊敬的用户'}}</view>
+                <progress-bar wx:if="{{user.isLogin}}" value="{{33}}" width="320rpx" />
+                <view class="tips">{{user.isLogin ?'一轴-一核-三区-三路径-六大文化':'会员可享【限时优惠】等多项权益'}}</view>
 
             </view>
         </view>
-        <view wx:if="{{user}}" class="coin-box">
+        <view wx:if="{{user.isLogin}}" class="coin-box">
             <image mode="aspectFill" src="../../assets/images/coin.png"></image>
             <view class="currency">51</view>
         </view>
 
-        <view wx:if="{{!user}}" class="login-btn" bindtap="gotoLogin">授权登录</view>
+        <view wx:if="{{!user.isLogin}}" class="login-btn" bindtap="gotoLogin">授权登录</view>
     </view>
 
     <!-- 点餐 banner -->
     <view class="menu-banner">
         <view class="location">
             <image src="../../assets/images/menu.png"></image>
-            <view class="name">天桥德云社</view>
+            <view class="name">{{nearbyStore ? nearbyStore.name:'附近暂无门店'}}</view>
         </view>
 
         <image class="menu-card" src="../../assets/images/menu-banner.jpg" bindtap="onMenuCardClick"></image>

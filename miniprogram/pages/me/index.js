@@ -1,36 +1,14 @@
 // pages/me/index.js
-const computedBehavior = require('miniprogram-computed').behavior
+import {userBehavior} from '../../behaviors/user-behavior'
 
 Page({
-    behavior: [computedBehavior],
+    behavior: [userBehavior],
     /**
      * 页面的初始数据
      */
     data: {
-        user: null
-    },
-    computed: {
-        desentiveMobile(data) {
-            if (!data.user) {
-                return ''
-            }
-            let mobile = data.user.phone_number
-
-            if (mobile) {
-                mobile = mobile.replace(/^(\d{3})\d{6}(\d{2})$/, "$1******$2")
-            }
-            return mobile
-        }
     },
 
-    onShow() {
-        if (!this.data.user) {
-            const user = wx.getStorageSync('user')
-            this.setData({
-                user
-            })
-        }
-    },
     gotoCustomPage(e) {
         const {
             code

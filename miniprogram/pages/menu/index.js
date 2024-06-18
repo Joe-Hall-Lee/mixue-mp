@@ -1,66 +1,70 @@
-// pages/menu/index.js
+// pages/menu/index.ts
+import {
+    userBehavior
+} from '../../behaviors/user-behavior'
+import swiperApi from '../../api/swiper'
+
 Page({
+    behaviors: [userBehavior],
+    data: {
+        headerStyle: '',
+        swiperList: [],
+        goodsList: [],
+        currentCategoryIndex: 0,
+        sidebarCurrent: 0,
+        goodsDialogShow: false,
+    },
+    onLoad(options) {
+        this.makeHeaderStyle();
+        this.fetchSwiperList();
+        this.fetchData();
+    },
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
+    onSideBarChange(e) {
+        this.setData({
+            currentCategoryIndex: e.detail.index
+        })
+    },
+    onGoodsListChange(e) {
+        this.setData({
+            sidebarCurrent: e.detail.index
+        })
+    },
 
-  },
+    onGoodsSelected(e) {
+        this.selectGoods(e.detail)
+        this.setData({
+            goodsDialogShow: true,
+        })
+    },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
 
-  },
+    fetchData() {
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
+    },
+    fetchSwiperList() {
+        swiperApi.list().then(res => {
+            this.setData({
+                swiperList: res.data
+            })
+        })
+    },
+    switchCurrentStore() {
+        this.setCurrentStore(null)
+        wx.navigateBack({
+            delta: 0,
+        })
+    },
+    makeHeaderStyle() {
+        const {
+            top,
+            bottom,
+            height
+        } = wx.getMenuButtonBoundingClientRect()
+        const menuButtonCenterPoint = top + height / 2
+        const headerStyle = 'margin-top: calc(' + menuButtonCenterPoint + 'px - 32rpx);'
+        this.setData({
+            headerStyle
+        })
+    }
 })

@@ -1,10 +1,17 @@
 import storeApi from "../../api/store"
+const QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js')
 const computedBehavior = require('miniprogram-computed').behavior
 const key = 'DVYBZ-DHJCB-I4CUK-JOTM3-X4Y6H-2PFRK'
+import {
+    globalBehavivor
+} from '../../behaviors/global-behavior'
+import {
+    userBehavior
+} from '../../behaviors/user-behavior'
 
 // pages/store/index.js
 Page({
-    behaviors: [computedBehavior],
+    behaviors: [globalBehavivor, userBehavior, computedBehavior],
     /**
      * 页面的初始数据
      */
@@ -20,7 +27,6 @@ Page({
         mapContext: null,
         mapSdk: key,
         storeDetailShow: false,
-        currentStore: null,
         collapse: false,
 
     },
@@ -41,8 +47,6 @@ Page({
         }
     },
 
-
-
     /**
      * 生命周期函数--监听页面加载
      */
@@ -52,12 +56,29 @@ Page({
 
         this.initMapContext()
     },
+
+    onMarkerTab(e) {
+        const {
+            markerId
+        } = e.detail
+        const store = this.data.storeList[markerId - 1]
+        this.setData({
+            storeDetailShow: true
+        })
+        this.setCurrentStore(store)
+    },
+
     initMapSdk() {
         this.mapSdk = key; // 腾讯地图 API Key
     },
     fetchStoreList() {
         storeApi.list(this.data.longitude, this.data.latitude).then(res => {
             this.makeStoreList(res.data)
+        })
+    },
+    goToMenu() {
+        wx.navigateTo({
+            url: '/pages/menu/index'
         })
     },
 
@@ -121,8 +142,6 @@ Page({
             this.mapContext = res.context
         }).exec()
     },
-    
-
 
     popupStoreDetail(e) {
         const {
@@ -130,8 +149,8 @@ Page({
         } = e.currentTarget.dataset
         this.setData({
             storeDetailShow: true,
-            currentStore: store
         })
+        this.setCurrentStore(store)
 
     },
     collapse() {
@@ -141,21 +160,11 @@ Page({
     },
 
     async loadCurrentLocation() {
-        wx.getLocation({
-            type: 'wgs84',
-            success: (res) => {
-
-                const latitude = res.latitude
-                const longitude = res.longitude
-                this.setData({
-                    latitude,
-                    longitude
-                }, () => {
-                    // 数据已经更新，现在可以安全地使用 latitude 和 longitude 了
-                    this.fetchStoreList();
-                })
-            }
+        this.setData({
+            latitude: this.data.user.location.latitude,
+            longitude: this.data.user.location.longitude
         })
+        this.fetchStoreList()
     },
 
     goToCurrentLocation() {

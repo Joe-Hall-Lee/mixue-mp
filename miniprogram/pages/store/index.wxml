@@ -55,7 +55,7 @@
 
 			</map>
 
-			<button class="menu-btn">进入菜单</button>
+			<button class="menu-btn" bindtap="gotoMenu">进入菜单</button>
 		</view>
 
 	</page-container>
